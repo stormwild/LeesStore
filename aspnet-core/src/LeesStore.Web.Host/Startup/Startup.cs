@@ -16,6 +16,7 @@ using LeesStore.Configuration;
 using LeesStore.Identity;
 
 using Abp.AspNetCore.SignalR.Hubs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LeesStore.Web.Host.Startup
 {
@@ -63,6 +64,11 @@ namespace LeesStore.Web.Host.Startup
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             services.AddSwaggerGen(options =>
             {
+                options.MapType<FileContentResult>(() => new Schema
+                {
+                    Type = "file"
+                });
+
                 options.SwaggerDoc("v1", new Info { Title = "LeesStore API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
 
@@ -74,6 +80,7 @@ namespace LeesStore.Web.Host.Startup
                     In = "header",
                     Type = "apiKey"
                 });
+
             });
 
             // Configure Abp and Dependency Injection
